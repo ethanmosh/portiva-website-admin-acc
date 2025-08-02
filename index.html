@@ -3,432 +3,941 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PortivaMedia Admin Dashboard</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>PortivaMedia - Working Admin Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-        
+
         body {
-            font-family: 'Arial', sans-serif;
-            background: linear-gradient(135deg, #0a0f1c 0%, #1a1a2e 50%, #16213e 100%);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0f1419 0%, #1a1f2e 50%, #2c1810 100%);
             color: #ffffff;
             min-height: 100vh;
         }
-        
-        .header {
-            background: rgba(26, 26, 46, 0.9);
-            border-bottom: 2px solid #d4af37;
-            padding: 1rem 2rem;
+
+        .dashboard-container {
             display: flex;
-            justify-content: space-between;
-            align-items: center;
+            min-height: 100vh;
         }
-        
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-        
-        .logo-icon {
-            width: 50px;
-            height: 50px;
-            background: linear-gradient(45deg, #d4af37, #1f8ef1);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: #0a0a0a;
-        }
-        
-        .logo-text {
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: #d4af37;
-        }
-        
-        .admin-info {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-        
-        .status-badge {
-            background: rgba(212, 175, 55, 0.2);
-            border: 1px solid #d4af37;
-            padding: 5px 15px;
-            border-radius: 20px;
-            font-size: 0.9rem;
-        }
-        
-        .logout-btn {
-            background: #1f8ef1;
-            border: none;
-            color: white;
-            padding: 10px 20px;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        
-        .logout-btn:hover {
-            background: #1976d2;
-            transform: translateY(-2px);
-        }
-        
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 2rem;
-        }
-        
-        .dashboard-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin-bottom: 2rem;
-        }
-        
-        .card {
-            background: rgba(26, 26, 46, 0.8);
-            border: 2px solid rgba(212, 175, 55, 0.3);
-            border-radius: 15px;
-            padding: 2rem;
-            backdrop-filter: blur(10px);
-            transition: all 0.3s ease;
-        }
-        
-        .card:hover {
-            border-color: #d4af37;
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.2);
-        }
-        
-        .card-header {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            margin-bottom: 1.5rem;
-        }
-        
-        .card-icon {
-            width: 50px;
-            height: 50px;
-            background: linear-gradient(45deg, #d4af37, #1f8ef1);
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            color: white;
-        }
-        
-        .card-title {
-            font-size: 1.3rem;
-            font-weight: bold;
-            color: #d4af37;
-        }
-        
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 1rem;
-            margin-bottom: 1rem;
-        }
-        
-        .stat-item {
-            text-align: center;
-            padding: 1rem;
-            background: rgba(31, 142, 241, 0.1);
-            border-radius: 10px;
-            border: 1px solid rgba(31, 142, 241, 0.3);
-        }
-        
-        .stat-number {
-            font-size: 2rem;
-            font-weight: bold;
-            color: #1f8ef1;
-            display: block;
-        }
-        
-        .stat-label {
-            font-size: 0.9rem;
-            color: #ccc;
-            margin-top: 5px;
-        }
-        
-        .chat-list {
-            max-height: 300px;
+
+        .sidebar {
+            width: 280px;
+            background: linear-gradient(180deg, #1a1f2e 0%, #0f1419 100%);
+            border-right: 2px solid #d4af37;
+            padding: 0;
+            box-shadow: 5px 0 20px rgba(212, 175, 55, 0.3);
+            position: fixed;
+            height: 100vh;
             overflow-y: auto;
+            z-index: 1000;
         }
-        
-        .chat-item {
+
+        .logo-section {
+            padding: 25px 20px;
+            text-align: center;
+            border-bottom: 2px solid #d4af37;
+            background: linear-gradient(45deg, #1f8ef1, #d4af37);
+        }
+
+        .logo-section h1 {
+            font-size: 24px;
+            font-weight: bold;
+            color: #ffffff;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            margin: 0;
+        }
+
+        .logo-section p {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.9);
+            margin: 5px 0 0 0;
+            font-weight: 500;
+        }
+
+        .main-content {
+            flex: 1;
+            margin-left: 280px;
+            padding: 0;
+            background: rgba(15, 20, 25, 0.95);
+        }
+
+        .header {
+            background: linear-gradient(90deg, #1f8ef1 0%, #d4af37 100%);
+            padding: 20px 30px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            border-bottom: 3px solid #d4af37;
+        }
+
+        .header h2 {
+            color: #ffffff;
+            font-size: 28px;
+            margin: 0;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .content-area {
+            padding: 30px;
+            min-height: calc(100vh - 80px);
+        }
+
+        .nav-menu {
+            list-style: none;
+            padding: 20px 0;
+        }
+
+        .nav-item {
+            margin: 0;
+        }
+
+        .nav-link {
             display: flex;
             align-items: center;
-            gap: 15px;
-            padding: 15px;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 10px;
-            margin-bottom: 10px;
-            cursor: pointer;
+            padding: 15px 25px;
+            color: #ffffff;
+            text-decoration: none;
             transition: all 0.3s ease;
+            border-left: 4px solid transparent;
+            cursor: pointer;
         }
-        
-        .chat-item:hover {
-            background: rgba(212, 175, 55, 0.1);
+
+        .nav-link:hover {
+            background: linear-gradient(90deg, rgba(31, 142, 241, 0.3), rgba(212, 175, 55, 0.3));
+            border-left-color: #d4af37;
             transform: translateX(5px);
         }
-        
-        .chat-avatar {
-            width: 40px;
-            height: 40px;
-            background: linear-gradient(45deg, #d4af37, #1f8ef1);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1rem;
-            color: white;
-            font-weight: bold;
+
+        .nav-link.active {
+            background: linear-gradient(90deg, rgba(31, 142, 241, 0.5), rgba(212, 175, 55, 0.5));
+            border-left-color: #d4af37;
+            box-shadow: inset 0 0 10px rgba(212, 175, 55, 0.3);
         }
-        
-        .chat-info {
-            flex: 1;
+
+        .nav-link i {
+            margin-right: 12px;
+            width: 20px;
+            text-align: center;
+            font-size: 16px;
         }
-        
-        .chat-name {
-            font-weight: bold;
-            color: #d4af37;
-            margin-bottom: 3px;
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+            margin-top: 20px;
         }
-        
-        .chat-message {
-            font-size: 0.9rem;
-            color: #ccc;
-            display: -webkit-box;
-            -webkit-line-clamp: 1;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-        }
-        
-        .chat-time {
-            font-size: 0.8rem;
-            color: #999;
-        }
-        
-        .btn {
-            background: linear-gradient(45deg, #d4af37, #1f8ef1);
-            border: none;
-            color: white;
-            padding: 12px 25px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: bold;
+
+        .dashboard-column {
+            background: linear-gradient(145deg, #1a1f2e 0%, #2a2f3e 100%);
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(212, 175, 55, 0.3);
             transition: all 0.3s ease;
-            text-decoration: none;
+            min-height: 400px;
+        }
+
+        .dashboard-column:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 40px rgba(212, 175, 55, 0.2);
+        }
+
+        .dashboard-column h3 {
+            color: #d4af37;
+            font-size: 18px;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid rgba(212, 175, 55, 0.3);
+            text-align: center;
+        }
+
+        .column-content {
+            height: calc(100% - 60px);
+            overflow-y: auto;
+        }
+
+        .data-item {
+            background: rgba(31, 142, 241, 0.1);
+            border-radius: 8px;
+            padding: 12px;
+            margin: 8px 0;
+            border-left: 3px solid #1f8ef1;
+            transition: all 0.3s ease;
+        }
+
+        .data-item:hover {
+            background: rgba(31, 142, 241, 0.2);
+            transform: translateX(5px);
+        }
+
+        .data-item strong {
+            color: #d4af37;
+        }
+
+        .stat-cards {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #1f8ef1 0%, #d4af37 100%);
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            color: white;
+            box-shadow: 0 4px 15px rgba(31, 142, 241, 0.3);
+        }
+
+        .stat-number {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            opacity: 0.9;
+        }
+
+        .active-indicator {
             display: inline-block;
-            text-align: center;
+            width: 8px;
+            height: 8px;
+            background: #00ff00;
+            border-radius: 50%;
+            margin-right: 8px;
+            animation: pulse 2s infinite;
         }
-        
-        .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(212, 175, 55, 0.3);
+
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
         }
-        
-        .no-chats {
+
+        .typing-indicator {
+            background: rgba(212, 175, 55, 0.2);
+            border: 1px solid #d4af37;
+            border-radius: 8px;
+            padding: 10px;
+            margin: 5px 0;
+            font-style: italic;
+        }
+
+        .chat-interface {
+            background: rgba(15, 20, 25, 0.9);
+            border-radius: 10px;
+            padding: 15px;
+            margin-top: 15px;
+            border: 1px solid rgba(31, 142, 241, 0.3);
+        }
+
+        .chat-input {
+            width: 100%;
+            padding: 10px;
+            background: rgba(26, 31, 46, 0.8);
+            border: 1px solid #1f8ef1;
+            border-radius: 5px;
+            color: white;
+            margin-top: 10px;
+        }
+
+        .send-btn {
+            background: linear-gradient(90deg, #1f8ef1, #d4af37);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .send-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 15px rgba(31, 142, 241, 0.4);
+        }
+
+        .loading {
             text-align: center;
-            padding: 2rem;
-            color: #ccc;
+            color: #d4af37;
+            font-style: italic;
+        }
+
+        .real-time-indicator {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: linear-gradient(45deg, #00ff00, #d4af37);
+            color: white;
+            padding: 10px 15px;
+            border-radius: 25px;
+            font-size: 14px;
+            font-weight: bold;
+            box-shadow: 0 4px 15px rgba(0, 255, 0, 0.3);
+            z-index: 1001;
         }
     </style>
 </head>
 <body>
-    <div class="header">
-        <div class="logo">
-            <div class="logo-icon">PM</div>
-            <div class="logo-text">PortivaMedia Admin</div>
-        </div>
-        <div class="admin-info">
-            <div class="status-badge">
-                <i class="fa-solid fa-circle" style="color: #4caf50; margin-right: 5px;"></i>
-                Online
+    <div class="dashboard-container">
+        <div class="sidebar">
+            <div class="logo-section">
+                <h1>PortivaMedia</h1>
+                <p>Ultimate Admin Dashboard</p>
             </div>
-            <button class="logout-btn" onclick="logout()">
-                <i class="fa-solid fa-sign-out-alt"></i> Logout
-            </button>
+            <nav>
+                <ul class="nav-menu">
+                    <li class="nav-item">
+                        <a href="#" class="nav-link active" data-section="overview">
+                            <i class="fas fa-chart-pie"></i>
+                            Overview Dashboard
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link" data-section="chats">
+                            <i class="fas fa-comments"></i>
+                            Chat Management
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link" data-section="leads">
+                            <i class="fas fa-users"></i>
+                            Lead Management
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link" data-section="projects">
+                            <i class="fas fa-project-diagram"></i>
+                            Client Projects
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link" data-section="bookings">
+                            <i class="fas fa-calendar-alt"></i>
+                            Booking & Schedule
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link" data-section="media">
+                            <i class="fas fa-photo-video"></i>
+                            Media Management
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link" data-section="team">
+                            <i class="fas fa-user-friends"></i>
+                            Team Management
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link" data-section="testimonials">
+                            <i class="fas fa-star"></i>
+                            Testimonials & Reviews
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link" data-section="analytics">
+                            <i class="fas fa-chart-line"></i>
+                            Analytics Dashboard
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link" data-section="settings">
+                            <i class="fas fa-cog"></i>
+                            Settings & Configuration
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+
+        <div class="main-content">
+            <div class="header">
+                <h2 id="section-title">📊 Overview Dashboard</h2>
+            </div>
+            <div class="content-area">
+                <div id="content-sections">
+                    <!-- Overview Section -->
+                    <div id="overview-section" class="section active">
+                        <div class="stat-cards">
+                            <div class="stat-card">
+                                <div class="stat-number" id="total-visitors">Loading...</div>
+                                <div class="stat-label">Total Visitors Today</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-number" id="active-chats">Loading...</div>
+                                <div class="stat-label">Active Chats</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-number" id="new-leads">Loading...</div>
+                                <div class="stat-label">New Leads</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-number" id="conversion-rate">Loading...</div>
+                                <div class="stat-label">Conversion Rate</div>
+                            </div>
+                        </div>
+                        <div class="dashboard-grid">
+                            <div class="dashboard-column">
+                                <h3>🔴 Live Activity Feed</h3>
+                                <div class="column-content">
+                                    <div id="live-activity">
+                                        <div class="loading">Loading real-time activity...</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="dashboard-column">
+                                <h3>👥 Active Visitors</h3>
+                                <div class="column-content">
+                                    <div id="active-visitors">
+                                        <div class="loading">Loading visitor data...</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Chat Management Section -->
+                    <div id="chats-section" class="section" style="display: none;">
+                        <div class="dashboard-grid">
+                            <div class="dashboard-column">
+                                <h3>💬 Active Conversations</h3>
+                                <div class="column-content">
+                                    <div id="active-conversations">
+                                        <div class="loading">Loading active chats...</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="dashboard-column">
+                                <h3>✍️ Real-time Typing Monitor</h3>
+                                <div class="column-content">
+                                    <div id="typing-monitor">
+                                        <div class="loading">Monitoring typing activity...</div>
+                                    </div>
+                                    <div class="chat-interface">
+                                        <div id="selected-chat-messages"></div>
+                                        <input type="text" id="admin-response" class="chat-input" placeholder="Type your response...">
+                                        <button class="send-btn" id="send-response">Send Response</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- All other sections will be dynamically populated -->
+                    <div id="leads-section" class="section" style="display: none;">
+                        <div class="dashboard-grid">
+                            <div class="dashboard-column">
+                                <h3>🎯 Lead Management</h3>
+                                <div class="column-content">
+                                    <div id="leads-data">
+                                        <div class="loading">Loading leads...</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="projects-section" class="section" style="display: none;">
+                        <div class="dashboard-grid">
+                            <div class="dashboard-column">
+                                <h3>🚀 Client Projects</h3>
+                                <div class="column-content">
+                                    <div id="projects-data">
+                                        <div class="loading">Loading projects...</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="bookings-section" class="section" style="display: none;">
+                        <div class="dashboard-grid">
+                            <div class="dashboard-column">
+                                <h3>📅 Booking & Schedule</h3>
+                                <div class="column-content">
+                                    <div id="bookings-data">
+                                        <div class="loading">Loading bookings...</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="media-section" class="section" style="display: none;">
+                        <div class="dashboard-grid">
+                            <div class="dashboard-column">
+                                <h3>🎬 Media Management</h3>
+                                <div class="column-content">
+                                    <div id="media-data">
+                                        <div class="loading">Loading media files...</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="team-section" class="section" style="display: none;">
+                        <div class="dashboard-grid">
+                            <div class="dashboard-column">
+                                <h3>👨‍💼 Team Management</h3>
+                                <div class="column-content">
+                                    <div id="team-data">
+                                        <div class="loading">Loading team members...</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="testimonials-section" class="section" style="display: none;">
+                        <div class="dashboard-grid">
+                            <div class="dashboard-column">
+                                <h3>⭐ Testimonials & Reviews</h3>
+                                <div class="column-content">
+                                    <div id="testimonials-data">
+                                        <div class="loading">Loading testimonials...</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="analytics-section" class="section" style="display: none;">
+                        <div class="dashboard-grid">
+                            <div class="dashboard-column">
+                                <h3>📈 Analytics Dashboard</h3>
+                                <div class="column-content">
+                                    <div id="analytics-data">
+                                        <div class="loading">Loading analytics...</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="settings-section" class="section" style="display: none;">
+                        <div class="dashboard-grid">
+                            <div class="dashboard-column">
+                                <h3>⚙️ Settings & Configuration</h3>
+                                <div class="column-content">
+                                    <div id="settings-data">
+                                        <div class="loading">Loading settings...</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
-    <div class="container">
-        <div class="dashboard-grid">
-            <!-- Analytics Card -->
-            <div class="card">
-                <div class="card-header">
-                    <div class="card-icon">
-                        <i class="fa-solid fa-chart-line"></i>
-                    </div>
-                    <div class="card-title">Analytics Overview</div>
-                </div>
-                <div class="stats-grid">
-                    <div class="stat-item">
-                        <span class="stat-number" id="visitor-count">0</span>
-                        <div class="stat-label">Today's Visitors</div>
-                    </div>
-                    <div class="stat-item">
-                        <span class="stat-number" id="lead-count">0</span>
-                        <div class="stat-label">New Leads</div>
-                    </div>
-                    <div class="stat-item">
-                        <span class="stat-number" id="chat-count">0</span>
-                        <div class="stat-label">Active Chats</div>
-                    </div>
-                    <div class="stat-item">
-                        <span class="stat-number" id="conversion-rate">0%</span>
-                        <div class="stat-label">Conversion Rate</div>
-                    </div>
-                </div>
-                <button class="btn" style="width: 100%; margin-top: 1rem;">
-                    <i class="fa-solid fa-external-link-alt"></i> View Full Analytics
-                </button>
-            </div>
-
-            <!-- Live Chats Card -->
-            <div class="card">
-                <div class="card-header">
-                    <div class="card-icon">
-                        <i class="fa-solid fa-comments"></i>
-                    </div>
-                    <div class="card-title">Live Customer Chats</div>
-                </div>
-                <div class="chat-list" id="chat-list">
-                    <div class="no-chats">
-                        <i class="fa-solid fa-comment-slash" style="font-size: 3rem; color: #666; margin-bottom: 1rem;"></i>
-                        <p>No active chats at the moment</p>
-                        <p style="font-size: 0.9rem; margin-top: 0.5rem;">Customers can start a chat from the website</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Quick Actions Card -->
-            <div class="card">
-                <div class="card-header">
-                    <div class="card-icon">
-                        <i class="fa-solid fa-bolt"></i>
-                    </div>
-                    <div class="card-title">Quick Actions</div>
-                </div>
-                <div style="display: grid; gap: 1rem;">
-                    <button class="btn" onclick="openMainSite()">
-                        <i class="fa-solid fa-globe"></i> View Main Website
-                    </button>
-                    <button class="btn" onclick="exportLeads()">
-                        <i class="fa-solid fa-download"></i> Export Leads
-                    </button>
-                    <button class="btn" onclick="sendBroadcast()">
-                        <i class="fa-solid fa-bullhorn"></i> Send Broadcast
-                    </button>
-                </div>
-            </div>
-
-            <!-- Recent Activity Card -->
-            <div class="card">
-                <div class="card-header">
-                    <div class="card-icon">
-                        <i class="fa-solid fa-clock"></i>
-                    </div>
-                    <div class="card-title">Recent Activity</div>
-                </div>
-                <div id="activity-feed">
-                    <p style="color: #ccc; text-align: center; padding: 2rem;">
-                        <i class="fa-solid fa-history" style="font-size: 2rem; margin-bottom: 1rem; display: block;"></i>
-                        Activity feed will appear here as visitors interact with your site
-                    </p>
-                </div>
-            </div>
-        </div>
+    <div class="real-time-indicator">
+        <span class="active-indicator"></span>
+        Real-time monitoring active
     </div>
 
     <script>
-        // Simple admin dashboard functionality
-        function logout() {
-            if (confirm('Are you sure you want to logout?')) {
-                window.location.href = '/index.html';
+        console.log('🎯 PortivaMedia Working Admin Dashboard - Fully Loaded with Real-time WebSocket Monitoring!');
+        
+        // WebSocket connection for real-time updates
+        let socket;
+        let currentSelectedChat = null;
+        
+        function connectWebSocket() {
+            const protocol = window.location.protocol === "https:" ? "wss:" : "ws:";
+            const wsUrl = `${protocol}//${window.location.host}/ws`;
+            
+            console.log('🔌 Connecting to WebSocket:', wsUrl);
+            
+            socket = new WebSocket(wsUrl);
+            
+            socket.onopen = function() {
+                console.log('✅ WebSocket connected successfully');
+                socket.send(JSON.stringify({
+                    type: 'admin_join',
+                    timestamp: new Date().toISOString()
+                }));
+            };
+            
+            socket.onmessage = function(event) {
+                const data = JSON.parse(event.data);
+                console.log('📨 WebSocket message received:', data);
+                handleRealtimeUpdate(data);
+            };
+            
+            socket.onclose = function() {
+                console.log('❌ WebSocket disconnected');
+                setTimeout(connectWebSocket, 3000);
+            };
+            
+            socket.onerror = function(error) {
+                console.error('WebSocket error:', error);
+            };
+        }
+        
+        // Handle real-time updates
+        function handleRealtimeUpdate(data) {
+            switch(data.type) {
+                case 'typing_start':
+                    showTypingIndicator(data);
+                    break;
+                case 'typing_stop':
+                    hideTypingIndicator(data.sessionId);
+                    break;
+                case 'new_message':
+                    updateChatDisplay(data);
+                    break;
+                case 'admin_message':
+                    updateChatWithAdminResponse(data);
+                    break;
             }
         }
-
-        function openMainSite() {
-            window.open('/index.html', '_blank');
+        
+        function showTypingIndicator(data) {
+            const typingMonitor = document.getElementById('typing-monitor');
+            const existingIndicator = document.getElementById(`typing-${data.sessionId}`);
+            
+            if (!existingIndicator) {
+                const typingDiv = document.createElement('div');
+                typingDiv.id = `typing-${data.sessionId}`;
+                typingDiv.className = 'typing-indicator';
+                typingDiv.innerHTML = `
+                    <strong>${data.userEmail || 'Anonymous User'}</strong> is typing: 
+                    <em>"${data.content || ''}"</em>
+                `;
+                typingMonitor.appendChild(typingDiv);
+            } else {
+                existingIndicator.innerHTML = `
+                    <strong>${data.userEmail || 'Anonymous User'}</strong> is typing: 
+                    <em>"${data.content || ''}"</em>
+                `;
+            }
         }
-
-        function exportLeads() {
-            alert('Lead export functionality would be implemented here');
+        
+        function hideTypingIndicator(sessionId) {
+            const indicator = document.getElementById(`typing-${sessionId}`);
+            if (indicator) {
+                indicator.remove();
+            }
         }
-
-        function sendBroadcast() {
-            alert('Broadcast messaging functionality would be implemented here');
+        
+        function updateChatWithAdminResponse(data) {
+            console.log('💬 Admin response received:', data);
+            // If a chat is currently selected, refresh its display
+            if (currentSelectedChat === data.sessionId) {
+                selectChat(data.sessionId);
+            }
+            // Refresh the active chats list to show updated data
+            loadActiveChats();
         }
-
-        // Simulate real-time updates
-        function updateStats() {
-            document.getElementById('visitor-count').textContent = Math.floor(Math.random() * 50) + 10;
-            document.getElementById('lead-count').textContent = Math.floor(Math.random() * 10) + 1;
-            document.getElementById('chat-count').textContent = Math.floor(Math.random() * 5);
-            document.getElementById('conversion-rate').textContent = (Math.random() * 15 + 5).toFixed(1) + '%';
+        
+        function updateChatDisplay(data) {
+            console.log('💬 New message received:', data);
+            // If a chat is currently selected, refresh its display
+            if (currentSelectedChat === data.sessionId) {
+                selectChat(data.sessionId);
+            }
+            // Refresh the active chats list to show new message
+            loadActiveChats();
         }
-
-        // Update stats every 30 seconds
-        updateStats();
-        setInterval(updateStats, 30000);
-
-        // Fetch and display active chats
-        async function loadActiveChats() {
+        
+        // API calls for dashboard data
+        async function fetchData(endpoint) {
             try {
-                const response = await fetch('/api/admin/active-chats');
-                const chats = await response.json();
+                const response = await fetch(endpoint);
+                if (!response.ok) throw new Error(`HTTP ${response.status}`);
+                return await response.json();
+            } catch (error) {
+                console.error(`Error fetching ${endpoint}:`, error);
+                return null;
+            }
+        }
+        
+        // Load all dashboard data
+        async function loadDashboardData() {
+            // Load overview stats
+            const stats = await fetchData('/api/admin/stats');
+            if (stats) {
+                document.getElementById('total-visitors').textContent = stats.todayVisitors || '0';
+                document.getElementById('active-chats').textContent = stats.activeChats || '0';
+                document.getElementById('new-leads').textContent = stats.newLeads || '0';
+                document.getElementById('conversion-rate').textContent = (stats.conversionRate || '0') + '%';
+            }
+            
+            // Load active chats
+            loadActiveChats();
+            
+            // Load all other data
+            loadSectionData();
+        }
+        
+        async function loadActiveChats() {
+            const chats = await fetchData('/api/admin/active-chats');
+            const conversationsDiv = document.getElementById('active-conversations');
+            
+            if (chats && chats.length > 0) {
+                conversationsDiv.innerHTML = chats.map(chat => `
+                    <div class="data-item" onclick="selectChat('${chat.id}')">
+                        <strong>${chat.userEmail || 'Anonymous User'}</strong><br>
+                        <small>Last active: ${new Date(chat.lastMessage || chat.createdAt).toLocaleString()}</small><br>
+                        <em>Status: ${chat.humanTakenOver ? 'Human Agent' : 'AI Assistant'}</em>
+                    </div>
+                `).join('');
+            } else {
+                conversationsDiv.innerHTML = '<div class="data-item">No active conversations</div>';
+            }
+        }
+        
+        async function selectChat(chatId) {
+            currentSelectedChat = chatId;
+            const chatData = await fetchData(`/api/chat/${chatId}`);
+            const messagesDiv = document.getElementById('selected-chat-messages');
+            
+            if (chatData && chatData.messages) {
+                messagesDiv.innerHTML = chatData.messages.map(msg => `
+                    <div class="data-item">
+                        <strong>${msg.role === 'human' ? 'Human Agent' : (msg.role === 'user' ? 'User' : 'AI')}:</strong><br>
+                        ${msg.content}
+                        <br><small>${new Date(msg.timestamp).toLocaleString()}</small>
+                    </div>
+                `).join('');
+            }
+        }
+        
+        async function sendAdminResponse() {
+            if (!currentSelectedChat) {
+                alert('Please select a chat first');
+                return;
+            }
+            
+            const responseText = document.getElementById('admin-response').value.trim();
+            if (!responseText) {
+                alert('Please enter a response');
+                return;
+            }
+            
+            try {
+                const response = await fetch(`/api/admin/response/${currentSelectedChat}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        message: responseText,
+                        adminName: 'Admin'
+                    })
+                });
                 
-                const chatList = document.getElementById('chat-list');
-                
-                if (chats.length === 0) {
-                    chatList.innerHTML = `
-                        <div class="no-chats">
-                            <i class="fa-solid fa-comment-slash" style="font-size: 3rem; color: #666; margin-bottom: 1rem;"></i>
-                            <p>No active chats at the moment</p>
-                            <p style="font-size: 0.9rem; margin-top: 0.5rem;">Customers can start a chat from the website</p>
-                        </div>
-                    `;
+                if (response.ok) {
+                    document.getElementById('admin-response').value = '';
+                    selectChat(currentSelectedChat); // Refresh chat display
                 } else {
-                    chatList.innerHTML = chats.map(chat => `
-                        <div class="chat-item" onclick="openChat('${chat.id}')">
-                            <div class="chat-avatar">${chat.customerName.charAt(0).toUpperCase()}</div>
-                            <div class="chat-info">
-                                <div class="chat-name">${chat.customerName}</div>
-                                <div class="chat-message">${chat.lastMessage}</div>
-                            </div>
-                            <div class="chat-time">${new Date(chat.timestamp).toLocaleTimeString()}</div>
-                        </div>
-                    `).join('');
+                    const error = await response.json();
+                    alert('Failed to send response: ' + error.error);
                 }
             } catch (error) {
-                console.error('Error loading chats:', error);
+                console.error('Error sending response:', error);
+                alert('Failed to send response');
             }
         }
-
-        function openChat(chatId) {
-            // Open chat interface - would redirect to chat management page
-            window.open(`/admin.html?chat=${chatId}`, '_blank');
+        
+        async function loadSectionData() {
+            // Load lead management first (most important)
+            try {
+                console.log('🔍 Loading lead management data...');
+                const leads = await fetchData('/api/admin/leads');
+                const leadsContainer = document.getElementById('leads-data');
+                
+                if (leads && leads.length > 0) {
+                    leadsContainer.innerHTML = leads.map(lead => `
+                        <div class="data-item" style="border-left: 3px solid #d4af37; padding-left: 15px; margin-bottom: 10px;">
+                            <strong style="color: #d4af37;">${lead.email}</strong><br>
+                            <small>Source: ${lead.source || 'Website Chat'}</small><br>
+                            <em>Score: ${lead.score || 'N/A'}/100 | Status: 
+                                <span style="color: ${lead.status === 'active' ? '#00ff88' : '#ff6b6b'};">
+                                    ${lead.status || 'active'}
+                                </span>
+                            </em><br>
+                            <small style="color: #888;">Added: ${new Date(lead.timestamp || lead.createdAt).toLocaleDateString()}</small>
+                        </div>
+                    `).join('');
+                    console.log(`✅ Loaded ${leads.length} leads successfully`);
+                } else {
+                    leadsContainer.innerHTML = '<div class="data-item" style="text-align: center; color: #888;">No leads found - Start chatting to generate leads!</div>';
+                    console.log('⚠️ No leads found in database');
+                }
+            } catch (error) {
+                console.error('❌ Error loading leads:', error);
+                document.getElementById('leads-data').innerHTML = '<div class="data-item" style="color: #ff6b6b;">Error loading lead data</div>';
+            }
+            
+            // Load bookings
+            const bookings = await fetchData('/api/admin/bookings');
+            if (bookings) {
+                document.getElementById('bookings-data').innerHTML = bookings.map(booking => `
+                    <div class="data-item">
+                        <strong>${booking.clientName}</strong> - ${booking.service}<br>
+                        <small>📅 ${booking.date} at ${booking.time}</small><br>
+                        <em>Status: ${booking.status} | Value: ${booking.estimatedValue}</em>
+                    </div>
+                `).join('');
+            }
+            
+            // Load projects
+            const projects = await fetchData('/api/admin/projects');
+            if (projects) {
+                document.getElementById('projects-data').innerHTML = projects.map(project => `
+                    <div class="data-item">
+                        <strong>${project.projectName}</strong><br>
+                        <small>Client: ${project.clientName}</small><br>
+                        <em>Progress: ${project.progress}% | Budget: ${project.budget}</em>
+                    </div>
+                `).join('');
+            }
+            
+            // Load media
+            const media = await fetchData('/api/admin/media');
+            if (media) {
+                document.getElementById('media-data').innerHTML = media.map(file => `
+                    <div class="data-item">
+                        <strong>${file.fileName}</strong><br>
+                        <small>Size: ${file.fileSize} | Project: ${file.project}</small><br>
+                        <em>Downloads: ${file.downloadCount}</em>
+                    </div>
+                `).join('');
+            }
+            
+            // Load team
+            const team = await fetchData('/api/admin/team');
+            if (team) {
+                document.getElementById('team-data').innerHTML = team.map(member => `
+                    <div class="data-item">
+                        <strong>${member.name}</strong> - ${member.role}<br>
+                        <small>Experience: ${member.experience} | Rating: ${member.rating}/5</small><br>
+                        <em>Active Projects: ${member.currentProjects}</em>
+                    </div>
+                `).join('');
+            }
+            
+            // Load testimonials
+            const testimonials = await fetchData('/api/admin/testimonials');
+            if (testimonials) {
+                document.getElementById('testimonials-data').innerHTML = testimonials.map(testimonial => `
+                    <div class="data-item">
+                        <strong>${testimonial.clientName}</strong> - ${testimonial.company}<br>
+                        <small>Rating: ${'⭐'.repeat(testimonial.rating)} | Value: ${testimonial.propertyValue}</small><br>
+                        <em>"${testimonial.review.substring(0, 100)}..."</em>
+                    </div>
+                `).join('');
+            }
+            
+            // Load analytics
+            const analytics = await fetchData('/api/admin/analytics');
+            if (analytics) {
+                document.getElementById('analytics-data').innerHTML = `
+                    <div class="data-item">
+                        <strong>Website Metrics</strong><br>
+                        Total Visitors: ${analytics.websiteMetrics?.totalVisitors || 'N/A'}<br>
+                        Page Views: ${analytics.websiteMetrics?.pageViews || 'N/A'}<br>
+                        Bounce Rate: ${analytics.websiteMetrics?.bounceRate || 'N/A'}
+                    </div>
+                    <div class="data-item">
+                        <strong>Revenue Metrics</strong><br>
+                        This Month: ${analytics.revenueMetrics?.thisMonth || 'N/A'}<br>
+                        Growth: ${analytics.revenueMetrics?.growth || 'N/A'}<br>
+                        Year to Date: ${analytics.revenueMetrics?.yearToDate || 'N/A'}
+                    </div>
+                `;
+            }
+            
+            // Load settings
+            const settings = await fetchData('/api/admin/settings');
+            if (settings) {
+                document.getElementById('settings-data').innerHTML = `
+                    <div class="data-item">
+                        <strong>Company Information</strong><br>
+                        Name: ${settings.companyInfo?.name || 'N/A'}<br>
+                        Email: ${settings.companyInfo?.email || 'N/A'}<br>
+                        Phone: ${settings.companyInfo?.phone || 'N/A'}
+                    </div>
+                    <div class="data-item">
+                        <strong>Service Status</strong><br>
+                        Photography: ${settings.services?.realEstatePhotography ? '✅' : '❌'}<br>
+                        Virtual Staging: ${settings.services?.virtualStaging ? '✅' : '❌'}<br>
+                        Video Services: ${settings.services?.videography ? '✅' : '❌'}
+                    </div>
+                `;
+            }
         }
-
-        // Load chats on page load and refresh every 5 seconds
-        loadActiveChats();
-        setInterval(loadActiveChats, 5000);
-
-        console.log('PortivaMedia Admin Dashboard loaded successfully');
+        
+        // Navigation handling
+        function switchSection(sectionName) {
+            // Hide all sections
+            document.querySelectorAll('.section').forEach(section => {
+                section.style.display = 'none';
+            });
+            
+            // Show selected section
+            document.getElementById(sectionName + '-section').style.display = 'block';
+            
+            // Update nav links
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.classList.remove('active');
+            });
+            document.querySelector(`[data-section="${sectionName}"]`).classList.add('active');
+            
+            // Update title
+            const titles = {
+                overview: '📊 Overview Dashboard',
+                chats: '💬 Chat Management',
+                leads: '🎯 Lead Management',
+                projects: '🚀 Client Projects',
+                bookings: '📅 Booking & Schedule',
+                media: '🎬 Media Management',
+                team: '👨‍💼 Team Management',
+                testimonials: '⭐ Testimonials & Reviews',
+                analytics: '📈 Analytics Dashboard',
+                settings: '⚙️ Settings & Configuration'
+            };
+            document.getElementById('section-title').textContent = titles[sectionName];
+        }
+        
+        // Event listeners
+        document.addEventListener('DOMContentLoaded', function() {
+            // Navigation
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const section = this.dataset.section;
+                    switchSection(section);
+                });
+            });
+            
+            // Send response button
+            document.getElementById('send-response').addEventListener('click', sendAdminResponse);
+            
+            // Enter key for response
+            document.getElementById('admin-response').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    sendAdminResponse();
+                }
+            });
+            
+            // Initialize
+            connectWebSocket();
+            loadDashboardData();
+            
+            // Refresh data every 30 seconds
+            setInterval(loadDashboardData, 30000);
+        });
     </script>
 </body>
 </html>
